@@ -1,0 +1,72 @@
+const express = require("express");
+const router = express.Router();
+const { v4: uuidv4 } = require("uuid"); // unique ID generator
+const fs = require("fs"); // filesystem module
+
+function readFile(path, callback) {
+  fs.readFile(path, "utf8", callback);
+}
+
+function writeFile(path, data, callback) {
+  fs.writeFile(path, JSON.stringify(data), callback);
+}
+
+//Send back the array of all videos
+router.get("/", (req, res) => {
+  readFile("../data/video-details.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    res.json(JSON.parse(data));
+  });
+
+  res.json;
+});
+
+// Get single video by ID
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+  readFile("../data/video-details.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    const videos = JSON.parse(data);
+    const videoFound = videos.find((video) => video.id == id);
+    if (videoFound) {
+      res.json(videoFound);
+    } else {
+      res.status(404).send(`no video with the id ${id} found`);
+    }
+  });
+
+  //   res.json;
+});
+
+//Post new video to collection
+router.post("/", (req, res) => {
+  readFile("../data/video-details.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+
+    const videoData = JSON.parse(data); //parse JSON to convert to JS
+
+    // push new video to dataVideos array
+    videoData.push({
+      id: uuidv4(), //.toString(),
+      title: req.body.title,
+      description: req.body.description,
+      date: Date.now(),
+    });
+
+    //write back to JSON file, save new video
+    writeFile("../data/video-details.json", videoData, (err) => {
+      if (err) {
+        return res.status("error adding video");
+      }
+      res.status(201).send("video added");
+    });
+  });
+});
+
+module.exports = router;
