@@ -16,6 +16,10 @@ const PORT = process.env.PORT || 5051;
 //middleware body parser
 app.use(express.json());
 
+//middleware for public files
+// app.use(express.static('public'));
+
+
 // routes for videos, get and post
 app.use("/videos", videoRoutes);
 
