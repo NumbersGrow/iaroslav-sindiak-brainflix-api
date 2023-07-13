@@ -13,7 +13,7 @@ function writeFile(path, data, callback) {
 
 //Send back the array of all videos
 router.get("/", (req, res) => {
-  readFile("../data/video-details.json", (err, data) => {
+  readFile("./data/video-details.json", (err, data) => {
     if (err) {
       console.log(err);
     }
@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
 // Get single video by ID
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  readFile("../data/video-details.json", (err, data) => {
+  readFile("./data/video-details.json", (err, data) => {
     if (err) {
       console.log(err);
     }
@@ -44,7 +44,12 @@ router.get("/:id", (req, res) => {
 
 //Post new video to collection
 router.post("/", (req, res) => {
-  readFile("../data/video-details.json", (err, data) => {
+  if (req.body.title && req.body.description) {
+    res.json(req.body.video && req.body.description);
+  } else {
+    res.status(404).send("fill up the forms first");
+  }
+  readFile("./data/video-details.json", (err, data) => {
     if (err) {
       console.log(err);
     }
@@ -60,7 +65,7 @@ router.post("/", (req, res) => {
     });
 
     //write back to JSON file, save new video
-    writeFile("../data/video-details.json", videoData, (err) => {
+    writeFile("./data/video-details.json", videoData, (err) => {
       if (err) {
         return res.status("error adding video");
       }
