@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5051;
 app.use(express.json());
 
 //middleware for public files
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 // routes for videos, get and post

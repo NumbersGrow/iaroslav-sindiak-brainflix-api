@@ -61,7 +61,14 @@ router.post("/", (req, res) => {
       id: uuidv4(), //.toString(),
       title: req.body.title,
       description: req.body.description,
-      date: Date.now(),
+      timestamp: Date.now(),
+      channel: "Iaro library",
+      image: "http://localhost:5050/images/image0.jpeg",
+      views: "1",
+      likes: "1",
+      duration: "4:01",
+      video: "https://project-2-api.herokuapp.com/stream",
+      comments: []
     });
 
     //write back to JSON file, save new video
