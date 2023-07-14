@@ -3,6 +3,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require("uuid"); // unique ID generator
 const fs = require("fs"); // filesystem module
 
+// 2 functions to make code cleaner further
 function readFile(path, callback) {
   fs.readFile(path, "utf8", callback);
 }
@@ -38,8 +39,6 @@ router.get("/:id", (req, res) => {
       res.status(404).send(`no video with the id ${id} found`);
     }
   });
-
-  //   res.json;
 });
 
 //Post new video to collection
@@ -58,7 +57,7 @@ router.post("/", (req, res) => {
 
     // push new video to dataVideos array
     videoData.push({
-      id: uuidv4(), //.toString(),
+      id: uuidv4(),
       title: req.body.title,
       description: req.body.description,
       timestamp: Date.now(),
@@ -68,7 +67,7 @@ router.post("/", (req, res) => {
       likes: "1",
       duration: "4:01",
       video: "https://project-2-api.herokuapp.com/stream",
-      comments: []
+      comments: [],
     });
 
     //write back to JSON file, save new video
