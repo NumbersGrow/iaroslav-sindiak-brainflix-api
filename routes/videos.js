@@ -20,7 +20,6 @@ router.get("/", (req, res) => {
     }
     res.json(JSON.parse(data));
   });
-
   res.json;
 });
 
@@ -52,7 +51,6 @@ router.post("/", (req, res) => {
     if (err) {
       console.log(err);
     }
-
     const videoData = JSON.parse(data); //parse JSON to convert to JS
 
     // push new video to dataVideos array
